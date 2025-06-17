@@ -19,7 +19,7 @@ if(isset($_POST['submit'])){
             require_once "templates/register.php";
             exit;
         }
-        $result = db_insert(`users`,$data);
+        $result = db_insert('users',$data);
         if($result){
             $success = "user added successfully, you may now login";
             require_once "templates/login.php";

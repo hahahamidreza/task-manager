@@ -1,4 +1,10 @@
 Options -Indexes
+
 RewriteEngine On
+
+
+# Exclude JavaScript and CSS files from being rewritten
 RewriteRule \.(js|css|jpg|png)$ - [L]
+
+# Redirect all other requests to index.php
 RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
