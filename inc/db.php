@@ -1,4 +1,5 @@
 <?php
+global $conn;
 global $sql;
 function db_conn(){
     global $config;
@@ -29,4 +30,17 @@ function db_insert($table_name, $input_array)
     $sql = "INSERT INTO `$table_name` ($keys_string) VALUES ($values_string)";
     $result = mysqli_query($conn,$sql);
     return $result;
+}
+function db_select($sql){
+    $connection = db_conn();
+    $result = mysqli_query($connection,$sql);
+    $output = mysqli_fetch_all($result);
+    return $output;
+}
+
+function db_select_one($sql){
+    $conn = db_conn();
+    $result = mysqli_query($conn,$sql);
+    $output = mysqli_fetch_row($result);
+    return $output;
 }

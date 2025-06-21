@@ -1,4 +1,6 @@
 <?php
+session_start();
+// global base_url();
 require_once 'loader.php';
 $request = $_REQUEST['q'];
 
@@ -16,7 +18,11 @@ $routes = [
 if (isset($routes[$first])) {
     require_once $routes[$first];
 } else {
-    header('location:');
+    header('location:index.php');
+}
+if ($routes[$first] === 'panel' && !isset($_SESSION['user'])) {
+    header("Location$baseurl/login");
+    exit();
 }
 require_once "header.php";
 ?>

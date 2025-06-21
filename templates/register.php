@@ -1,7 +1,8 @@
-<?php require_once "header.php" ?>
+<?php require_once "../header.php" ;
+require_once "../loader.php";?>
 <div class="container">
     <div class="d-flex justify-content-center">
-        <form action="handle.php" class="d-flex border position-relative rounded p-3 mt-3 bg-light border-secondary gap-1 flex-column col-4" method="post">
+        <form action="handle.php" class="d-flex border position-relative rounded p-3 mt-3 bg-light border-secondary gap-1 flex-column col-4" method="POST">
             <?php if (isset($success)): ?>
                 <div class="position-absolute top-0 alert alert-success" role="alert">
                     <?php echo $success; ?>
@@ -16,16 +17,17 @@
             <h2>register</h2>
             <label for="name">Name</label>
             <input type="text" name="name" id="name">
-            <label for="email">Email</label>
-            <input type="email" name="email" id="email" required>
-            <label for="password">password</label>
-            <input type="password" name="password" id="password" required>
+            <label for="email" autocomplete="off">Email</label>
+            <input type="email" name="email" id="email">
+            <label for="password" autocomplete="off">password</label>
+            <input type="password" name="password" id="password">
             <label for="pass_con">confirm your password</label>
-            <input type="password" name="pass_con" id="pass_con" required>
+            <input type="password" name="pass_con" id="pass_con">
             <input type="submit" value="Register" name="submit" class="btn btn-dark">
             <input type="hidden" value="register" name="type">
             <p>already have an account?<a href="<?php base_url() ?>login">Login here</a></p>
         </form>
     </div>
 </div>
-<?php require_once "footer.php";
+<?php require_once "../footer.php";
+
