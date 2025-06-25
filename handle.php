@@ -2,9 +2,10 @@
 // error_reporting(E_ALL);
 // ini_set('display_errors', 1);
 require_once "loader.php";
+session_start();
 $submit = $_POST['submit'];
 if (isset($submit)) {
-    echo "submitted";
+    // echo "submitted";
     // exit;
     $type = $_POST['type'];
     if ($type === "register") {
@@ -71,18 +72,37 @@ if (isset($submit)) {
             $_SESSION['user_id'] = $user['user_id'];
             $_SESSION['name'] = $user['name'];
             $success = "you are logged in, going to panel";
-            $base_url = base_url();
-            header("location:templates/panel");
-            echo "success";
+            // $base_url = base_url();
+            header("location:$base_url/panel");
+            // echo "success";
             exit;
         } else {
-            $error = "something went wrong! try again later";
+            $error = "email or password is wrong!";
             require_once "templates/login.php";
-            echo "failure";
+            // echo "failure";
             exit;
         }
     }
+    if($type === "new-task") {
+        $data = [
+            'task_tittle' => $_POST['task_name'],
+            'task_des' => $_POST['task_des'],
+            'task_urgent' => $_POST['task_urgent'],
+            'deadline' => $_POST['task_dead']
+        ];
+        if(!empty ($data['task_tittle'])) {
+            $error = "your task needs a tittle";
+            require_once "templates/new-task.php";
+            exit;
+        }
+        if(!empty ($data['deadline'])) {
+            $error = "your task needs a deadline";
+            require_once "templates/new-task.php";
+            exit;
+        }
+
+    }
 } else {
-    echo "not submitted";
+//    echo "not submitted";
     exit;
 }

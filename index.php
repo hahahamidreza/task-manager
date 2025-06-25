@@ -12,7 +12,9 @@ $routes = [
     '' => 'index.php',
     'register' => 'templates/register.php',
     'login' => 'templates/login.php',
-    'panel' => 'templates/panel.php'
+    'panel' => 'templates/panel.php',
+    'logout' => 'logout.php',
+    'new-task' => 'templates/new_task.php'
 ];
 
 if (isset($routes[$first])) {
@@ -20,7 +22,7 @@ if (isset($routes[$first])) {
 } else {
     header('location:index.php');
 }
-if ($routes[$first] === 'panel' && !isset($_SESSION['user'])) {
+if ($routes[$first] === 'panel' && !isset($_SESSION['user_id'])) {
     header("Location$baseurl/login");
     exit();
 }
@@ -33,4 +35,3 @@ require_once "header.php";
     </div>
 </div>
 <?php require_once "footer.php";
-

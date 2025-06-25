@@ -1,5 +1,10 @@
-<?php require_once '../header.php';
-require_once "../loader.php";
+<?php require_once "header.php";
+require_once "loader.php";
+if (isset($_SESSION['user_id'])) {
+    header("location:$base_url/panel");
+    exit;
+    echo "hi";
+}
 ?>
 <div class="container">
     <div class="d-flex justify-content-center">
@@ -26,4 +31,4 @@ require_once "../loader.php";
         </form>
     </div>
 </div>
-<?php require_once "../footer.php";
+<?php require_once "footer.php";

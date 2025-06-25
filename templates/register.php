@@ -1,5 +1,10 @@
-<?php require_once "../header.php" ;
-require_once "../loader.php";?>
+<?php
+if(isset($_SESSION['user_id'])){
+    header("location:$base_url/panel");
+    exit;
+}
+require_once "header.php";
+require_once "loader.php"; ?>
 <div class="container">
     <div class="d-flex justify-content-center">
         <form action="handle.php" class="d-flex border position-relative rounded p-3 mt-3 bg-light border-secondary gap-1 flex-column col-4" method="POST">
@@ -29,5 +34,4 @@ require_once "../loader.php";?>
         </form>
     </div>
 </div>
-<?php require_once "../footer.php";
-
+<?php require_once "footer.php";
