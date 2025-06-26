@@ -83,24 +83,35 @@ if (isset($submit)) {
             exit;
         }
     }
-    if($type === "new-task") {
+    if($type === "new-task" && isset($_SESSION['user_id'])) {
         $data = [
             'task_tittle' => $_POST['task_name'],
             'task_des' => $_POST['task_des'],
             'task_urgent' => $_POST['task_urgent'],
-            'deadline' => $_POST['task_dead']
+            'dead_line' => $_POST['task_dead']
         ];
-        if(!empty ($data['task_tittle'])) {
+        if(empty ($data['task_tittle'])) {
             $error = "your task needs a tittle";
-            require_once "templates/new-task.php";
+            require_once "templates/new_task.php";
             exit;
         }
-        if(!empty ($data['deadline'])) {
+        if(empty ($data['dead_line'])) {
             $error = "your task needs a deadline";
-            require_once "templates/new-task.php";
+            require_once "templates/new_task.php";
             exit;
         }
-
+        $result = db_insert('user_task', $data);
+        if ($result) {
+            $success = "task added successfully";
+            header("location:$base_url/panel");
+            // require_once "login.php";
+            exit;
+        } else {
+            $error = "something went wrong! please try again later";
+            echo "hi";
+            require_once "templates/new_task.php";
+            exit;
+        }
     }
 } else {
 //    echo "not submitted";

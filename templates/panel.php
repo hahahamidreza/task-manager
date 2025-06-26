@@ -13,8 +13,6 @@ if (!isset($_SESSION['user_id'])) {
     header("location:login.php");
     exit;
 }
-// require_once "../header.php";
-// require_once "../header.php";
 ?>
 <!DOCTYPEhtml>
 <html>
