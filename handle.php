@@ -3,8 +3,7 @@
 // ini_set('display_errors', 1);
 require_once "loader.php";
 session_start();
-$submit = $_POST['submit'];
-if (isset($submit)) {
+if (isset($_POST['submit'])) {
     // echo "submitted";
     // exit;
     $type = $_POST['type'];
@@ -83,19 +82,22 @@ if (isset($submit)) {
             exit;
         }
     }
-    if($type === "new-task" && isset($_SESSION['user_id'])) {
+    if ($type === "new-task" && isset($_SESSION['user_id'])) {
+        $raw_deadline = $_POST['task_dead'];
+        $formatted_deadline = date("Y-m-d H:i:s", strtotime($raw_deadline));
         $data = [
             'task_tittle' => $_POST['task_name'],
             'task_des' => $_POST['task_des'],
             'task_urgent' => $_POST['task_urgent'],
-            'dead_line' => $_POST['task_dead']
+            'dead_line' => $formatted_deadline,
+            'user_id' => $_SESSION['user_id']
         ];
-        if(empty ($data['task_tittle'])) {
+        if (empty($data['task_tittle'])) {
             $error = "your task needs a tittle";
             require_once "templates/new_task.php";
             exit;
         }
-        if(empty ($data['dead_line'])) {
+        if (empty($data['dead_line'])) {
             $error = "your task needs a deadline";
             require_once "templates/new_task.php";
             exit;
@@ -114,6 +116,27 @@ if (isset($submit)) {
         }
     }
 } else {
-//    echo "not submitted";
+    //    echo "not submitted";
     exit;
+}
+$task_id = intval($_GET['task_id']);
+$user_id = $_SESSION['user_id'];
+
+if (isset($_GET['type']) && $_GET['type'] == "task_act" && isset($_GET['submit'])) {
+    if ($_GET['submit'] = 'delete') {
+        $data = [
+            'task_id' => intval($_GET['task_id']),
+            'user_id' => $_SESSION['user_id']
+        ];
+        if ($act = 'delete') {
+            $sql = "SELECT FROM `user_task` WHERE `task_id` = '$task_id' AND `user_id` = '$user_id'";
+            $result = db_select($sql);
+            if ($result) {
+                db_delete('user_task', $data);
+                echo "deleted successfully";
+                header("location:$base_url/panel");
+                exit;
+            }
+        }
+    }
 }

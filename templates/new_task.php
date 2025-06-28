@@ -20,11 +20,11 @@ require_once "header.php";
         <label for="task_des">task description</label>
         <textarea name="task_des" id="task_des"></textarea>
         <label for="task_dead">dead line</label>
-        <input name="task_dead" id="task_dead" type="time">
+        <input name="task_dead" id="task_dead" type="datetime-local" class="form-control">
         <label for="task_urgent">how urgent is it?</label>
         <select name="task_urgent" id="task_urgent">
-            <option class="bg-danger text-light" value="red">red</option>
-            <option class="bg-primary text-light" value="blue">blue</option>
+            <option class="bg-danger text-light" value="1">red</option>
+            <option class="bg-primary text-light" value="0">blue</option>
         </select>
         <input type="submit" value="save" name="submit" class="btn btn-dark">
         <input type="hidden" value="new-task" name="type">
