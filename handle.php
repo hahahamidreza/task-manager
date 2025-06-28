@@ -120,7 +120,6 @@
     $user_id = $_SESSION['user_id'];
     if (isset($_GET['submit'])) {
         if (isset($_GET['type']) && $_GET['type'] == "task_act") {
-
             if ($_GET['submit'] === 'delete') {
                 $sql = "SELECT * FROM `user_task` WHERE `task_id` = '$task_id' AND `user_id` = '$user_id'";
                 $result = db_select_task($sql);

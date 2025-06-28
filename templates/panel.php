@@ -50,7 +50,7 @@ if (!isset($user_id)) {
                                 <a href="http://localhost/task-manager/handle.php?type=task_act&task_id=8&submit=delete">
                                     <i class="fa-regular fa-trash"></i>
                                 </a>
-                                <p><?php echo $_SESSION['user_id'] ?></p>
+                                <!-- <p><?php echo $_SESSION['user_id'] ?></p> -->
                                 <h5 class='card-title'><?php echo $title; ?></h5>
                                 <p class='card-text'><?php echo $desc; ?></p>
                                 <p class='card-text'>
