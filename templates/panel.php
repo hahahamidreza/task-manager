@@ -47,9 +47,10 @@ if (!isset($user_id)) {
                 ?>
                         <div class='card'>
                             <div class='card-body'>
-                                <a href="handle.php?type=task_act&task_id=<?php echo $row['task_id']; ?>&submit=delete">
+                                <a href="http://localhost/task-manager/handle.php?type=task_act&task_id=8&submit=delete">
                                     <i class="fa-regular fa-trash"></i>
                                 </a>
+                                <p><?php echo $_SESSION['user_id'] ?></p>
                                 <h5 class='card-title'><?php echo $title; ?></h5>
                                 <p class='card-text'><?php echo $desc; ?></p>
                                 <p class='card-text'>
@@ -68,7 +69,7 @@ if (!isset($user_id)) {
                 ?>
             </div>
         </div>
-        <a href=" new-task" class="position-fixed bottom-0 end-0 m-4 text-decoration-none
+        <a href="new-task" class="position-fixed bottom-0 end-0 m-4 text-decoration-none
         btn btn-primary rounded-2 btn-lg  z-3">
             <i class="fa-solid fa-plus"></i>
         </a>
