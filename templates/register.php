@@ -7,7 +7,7 @@ require_once "header.php";
 require_once "loader.php"; ?>
 <div class="container">
     <div class="d-flex justify-content-center">
-        <form action="handle.php" class="d-flex border position-relative rounded p-3 mt-3 bg-light border-secondary gap-1 flex-column col-4" method="POST">
+        <form action="handle.php" class="d-flex border position-relative rounded p-3 mt-3 <?php if(isset($_COOKIE)){echo 'bg-dark text-light';} ?> border-secondary gap-1 flex-column col-4" method="POST">
             <?php if (isset($success)): ?>
                 <div class="position-absolute top-0 alert alert-success" role="alert">
                     <?php echo $success; ?>
@@ -28,7 +28,7 @@ require_once "loader.php"; ?>
             <input type="password" name="password" id="password">
             <label for="pass_con">confirm your password</label>
             <input type="password" name="pass_con" id="pass_con">
-            <input type="submit" value="Register" name="submit" class="btn btn-dark">
+            <input type="submit" value="Register" name="submit" class="btn btn-outline">
             <input type="hidden" value="register" name="type">
             <p>already have an account?<a href="<?php base_url() ?>login">Login here</a></p>
         </form>

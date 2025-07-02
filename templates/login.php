@@ -6,9 +6,9 @@ if (isset($_SESSION['user_id'])) {
     echo "hi";
 }
 ?>
-<div class="container">
+<div class="container ">
     <div class="d-flex justify-content-center">
-        <form action="handle.php" class="d-flex position-relative border rounded p-3 mt-3 bg-light border-secondary gap-1 flex-column col-4" method="POST">
+        <form action="handle.php" class="<?php if(isset($_COOKIE)){echo 'bg-dark text-light';} ?> d-flex position-relative border rounded p-3 mt-3 bg-light border-secondary gap-1 flex-column col-4" method="POST">
             <?php if (isset($success)): ?>
                 <div class="position-absolute top-0 alert alert-success" role="alert">
                     <?php echo $success; ?>

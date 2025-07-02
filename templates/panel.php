@@ -1,6 +1,8 @@
 <?php
+date_default_timezone_set("Asia/Tehran");
+$date = date('Y-m-d\th:i');
 require_once("loader.php");
-$require = require_once("header.php");
+// $require = require_once("header.php");
 // if ($require) {
 //     echo "true";
 // } else {
@@ -17,8 +19,8 @@ if (!isset($user_id)) {
 if (isset($_GET['theme_mode'])) {
     $current = $_COOKIE['theme'] ?? 'light';
     $newTheme = ($current === 'dark') ? 'light' : 'dark';
-    setcookie('theme', $newTheme, time() + 86400, "/"); // 30 days
-    header("Location: $base_url/panel"); // Prevent resubmission
+    setcookie('theme', $newTheme, time() + 86400, "/");
+    header("Location: $base_url/panel");
     exit();
 }
 
@@ -35,7 +37,7 @@ $theme = $_COOKIE['theme'] ?? 'light';
     </head>
 
     <body class="<?php if ($theme === 'dark') {
-                        echo 'bg-dark text-light';
+                        echo 'bg-black text-light';
                     } else {
                         echo 'bg-light text-dark';
                     } ?>">
@@ -50,7 +52,7 @@ $theme = $_COOKIE['theme'] ?? 'light';
                 <?php echo (isset($_SESSION['name'])) ? $_SESSION['name'] : 'my friend'; ?>
             </h3>
             <div class="d-flex flex-row gap-1 align-items-center">
-                <form action="" method="get">
+                <form class="m-0" action="" method="get">
                     <button type="submit" name="theme_mode" class="btn btn-outline-light">
                         <i class="fa-solid fa-<?php if ($theme == 'dark') {
                                                     echo 'sun';
@@ -75,6 +77,7 @@ $theme = $_COOKIE['theme'] ?? 'light';
                         $desc = htmlspecialchars($row['task_des']);
                         $urgent = $row['task_urgent'] == 1 ? 'Urgent' : 'Normal';
                         $deadline = date("F j, Y, g:i A", strtotime($row['dead_line']));
+                        $status = $row['done-undone'];
                 ?>
                         <div class='card'>
                             <div class='card-body <?php if ($theme === 'dark') {
@@ -85,15 +88,16 @@ $theme = $_COOKIE['theme'] ?? 'light';
                                 </a>
                                 <h5 class='card-title'><?php echo $title; ?></h5>
                                 <p class='card-text'><?php echo $desc; ?></p>
-                                <a href="handle.php?type=task_act&task_id=<?php echo $row['task_id']; ?>$submit=check">
+                                <form action="handle" method="GET">
                                     <input type="checkbox" name="check">
-                                </a>
+                                </form>
                                 <p class='card-text'>
                                     <small class='text-secondary'>Deadline: <?php echo $deadline; ?></small><br>
                                     <span class="badge bg-<?php echo ($row['task_urgent'] ? 'danger' : 'primary'); ?>">
                                         <?php echo $urgent; ?>
                                     </span>
                                 </p>
+                                <p>is left</p>
                             </div>
                         </div>
                 <?php
@@ -112,4 +116,4 @@ $theme = $_COOKIE['theme'] ?? 'light';
 
     </html>
 
-    <!-- <?php require_once("../footer.php"); ?> -->
+    <!-- <?php require_once("footer.php"); ?> -->
