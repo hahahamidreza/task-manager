@@ -104,7 +104,6 @@
                 exit;
             }
             if ($raw_deadline <= $now) {
-                echo "<p class='text-danger'>❌ Please select a future date and time.</p>";
                 $error = "select a date/time in the future";
                 require_once "templates/new_task.php";
                 exit;
