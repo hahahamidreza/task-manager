@@ -1,4 +1,5 @@
     <?php
+    $now = date('Y-m-d\th:i');
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
     require_once "loader.php";
@@ -102,6 +103,12 @@
                 require_once "templates/new_task.php";
                 exit;
             }
+            if ($raw_deadline <= $now) {
+                echo "<p class='text-danger'>❌ Please select a future date and time.</p>";
+                $error = "select a date/time in the future";
+                require_once "templates/new_task.php";
+                exit;
+            }
             $result = db_insert('user_task', $data);
             if ($result) {
                 $success = "task added successfully";
@@ -119,24 +126,26 @@
     $task_id = intval($_GET['task_id']);
     $user_id = $_SESSION['user_id'];
     if (isset($_GET['submit'])) {
-        if (isset($_GET['type']) && $_GET['type'] == "task_act") {
-            if ($_GET['submit'] === 'delete') {
-                $sql = "SELECT * FROM `user_task` WHERE `task_id` = '$task_id' AND `user_id` = '$user_id'";
-                $result = db_select_task($sql);
-                var_dump($result);
-                if ($result && mysqli_num_rows($result) > 0) {
-                    $data = [
-                        'task_id' => intval($_GET['task_id']),
-                        'user_id' => $_SESSION['user_id']
-                    ];
-                    var_dump($delete);
-                    $delete = db_delete('user_task', $data);
-                    if ($delete) {
-                        echo "deleted successfully";
-                        header("location: $base_url/panel");
-                        exit;
-                    } else {
-                        echo "sth wrong";
+        if (isset($_GET['type'])) {
+            if ($_GET['type'] == "task_act") {
+                if ($_GET['submit'] === 'delete') {
+                    $sql = "SELECT * FROM `user_task` WHERE `task_id` = '$task_id' AND `user_id` = '$user_id'";
+                    $result = db_select_task($sql);
+                    var_dump($result);
+                    if ($result && mysqli_num_rows($result) > 0) {
+                        $data = [
+                            'task_id' => intval($_GET['task_id']),
+                            'user_id' => $_SESSION['user_id']
+                        ];
+                        var_dump($delete);
+                        $delete = db_delete('user_task', $data);
+                        if ($delete) {
+                            echo "deleted successfully";
+                            header("location: $base_url/panel");
+                            exit;
+                        } else {
+                            echo "sth wrong";
+                        }
                     }
                 }
             }

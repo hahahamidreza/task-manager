@@ -14,6 +14,16 @@ if (!isset($user_id)) {
     header("location:login.php");
     exit;
 }
+if (isset($_GET['theme_mode'])) {
+    $current = $_COOKIE['theme'] ?? 'light';
+    $newTheme = ($current === 'dark') ? 'light' : 'dark';
+    setcookie('theme', $newTheme, time() + 86400, "/"); // 30 days
+    header("Location: $base_url/panel"); // Prevent resubmission
+    exit();
+}
+
+// Get current theme
+$theme = $_COOKIE['theme'] ?? 'light';
 ?>
 <!DOCTYPEhtml>
     <html>
@@ -24,14 +34,35 @@ if (!isset($user_id)) {
         <script src="../assessts/js/bootstrap.bundle.min.js"></script>
     </head>
 
-    <body>
-        <div class="header p-3 d-flex align-items justify-content-between position-sticky z-3 start-0 end-0 top-0 bg-dark text-light">
-            <p class=" align-baseline text-center">welcome to panel,
+    <body class="<?php if ($theme === 'dark') {
+                        echo 'bg-dark text-light';
+                    } else {
+                        echo 'bg-light text-dark';
+                    } ?>">
+        <div class="header p-3 d-flex align-items-center position-sticky z-3 start-0 end-0 top-0 justify-content-between
+        <?php if ($theme == 'dark') {
+            echo 'bg-secondary text-dark';
+        } else {
+            echo 'bg-dark text-light';
+        } ?>
+        ">
+            <h3 class="m-0 vertical-align-center align-baseline text-center">welcome to panel,
                 <?php echo (isset($_SESSION['name'])) ? $_SESSION['name'] : 'my friend'; ?>
-            </p>
-            <a href="logout.php" class="btn btn-outline-light text-decoration-none">
-                <i class="fa-regular fa-right-from-bracket"></i>
-            </a>
+            </h3>
+            <div class="d-flex flex-row gap-1 align-items-center">
+                <form action="" method="get">
+                    <button type="submit" name="theme_mode" class="btn btn-outline-light">
+                        <i class="fa-solid fa-<?php if ($theme == 'dark') {
+                                                    echo 'sun';
+                                                } else {
+                                                    echo 'moon';
+                                                } ?>"></i>
+                    </button>
+                </form>
+                <a href="logout.php" class="btn btn-outline-light text-decoration-none">
+                    <i class="fa-regular fa-right-from-bracket"></i>
+                </a>
+            </div>
         </div>
         <div class="container">
             <div class="tasks d-flex gap-1 mt-2 flex-wrap">
@@ -46,15 +77,19 @@ if (!isset($user_id)) {
                         $deadline = date("F j, Y, g:i A", strtotime($row['dead_line']));
                 ?>
                         <div class='card'>
-                            <div class='card-body'>
-                                <a href="http://localhost/task-manager/handle.php?type=task_act&task_id=8&submit=delete">
+                            <div class='card-body <?php if ($theme === 'dark') {
+                                                        echo 'bg-dark text-light';
+                                                    } ?> border border-secondary rounded'>
+                                <a href="http://localhost/task-manager/handle.php?type=task_act&task_id=<?php echo $row['task_id']; ?>&submit=delete">
                                     <i class="fa-regular fa-trash"></i>
                                 </a>
-                                <!-- <p><?php echo $_SESSION['user_id'] ?></p> -->
                                 <h5 class='card-title'><?php echo $title; ?></h5>
                                 <p class='card-text'><?php echo $desc; ?></p>
+                                <a href="handle.php?type=task_act&task_id=<?php echo $row['task_id']; ?>$submit=check">
+                                    <input type="checkbox" name="check">
+                                </a>
                                 <p class='card-text'>
-                                    <small class='text-muted'>Deadline: <?php echo $deadline; ?></small><br>
+                                    <small class='text-secondary'>Deadline: <?php echo $deadline; ?></small><br>
                                     <span class="badge bg-<?php echo ($row['task_urgent'] ? 'danger' : 'primary'); ?>">
                                         <?php echo $urgent; ?>
                                     </span>

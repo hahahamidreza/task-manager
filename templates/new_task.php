@@ -1,6 +1,8 @@
 <?php
 require_once "loader.php";
 require_once "header.php";
+
+$now = date('Y-m-d\th:i');
 ?>
 <div class="container">
     <form action="handle.php" class="d-flex flex-column " method="post">
@@ -20,7 +22,7 @@ require_once "header.php";
         <label for="task_des">task description</label>
         <textarea name="task_des" id="task_des"></textarea>
         <label for="task_dead">dead line</label>
-        <input name="task_dead" id="task_dead" type="datetime-local" class="form-control">
+        <input name="task_dead" id="task_dead" type="datetime-local" class="form-control" required min="<?= $now ?>">
         <label for="task_urgent">how urgent is it?</label>
         <select name="task_urgent" id="task_urgent">
             <option class="bg-danger text-light" value="1">red</option>
